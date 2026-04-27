@@ -1,6 +1,7 @@
 @extends('dashboard.layout')
 
 @section('title', 'Lead Inbox')
+@section('subtitle', 'Review incoming inquiries from your landing page form.')
 
 @section('content')
     <div class="panel">
