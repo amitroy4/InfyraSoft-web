@@ -7,8 +7,241 @@ use App\Models\SiteSetting;
 
 class SiteDataController extends Controller
 {
+    private function defaultClients(): array
+    {
+        return [
+            [
+                'logo' => '/vite.svg',
+                'name' => 'Northstar Retail',
+                'url' => 'https://example.com',
+                'active' => true,
+            ],
+            [
+                'logo' => '/vite.svg',
+                'name' => 'Atlas Finance',
+                'url' => 'https://example.com',
+                'active' => true,
+            ],
+            [
+                'logo' => '/vite.svg',
+                'name' => 'Summit Health',
+                'url' => 'https://example.com',
+                'active' => true,
+            ],
+            [
+                'logo' => '/vite.svg',
+                'name' => 'Prime Logistics',
+                'url' => 'https://example.com',
+                'active' => true,
+            ],
+            [
+                'logo' => '/vite.svg',
+                'name' => 'BluePeak Foods',
+                'url' => 'https://example.com',
+                'active' => true,
+            ],
+            [
+                'logo' => '/vite.svg',
+                'name' => 'Vertex Education',
+                'url' => 'https://example.com',
+                'active' => true,
+            ],
+        ];
+    }
+
+    private function defaultBlogCategories(): array
+    {
+        return [
+            [
+                'name' => 'Case Study',
+                'slug' => 'case-study',
+                'description' => 'Project stories, transformations, and client outcomes.',
+                'active' => true,
+            ],
+            [
+                'name' => 'Blog',
+                'slug' => 'blog',
+                'description' => 'Articles, insights, and technical posts.',
+                'active' => true,
+            ],
+            [
+                'name' => 'Announcement',
+                'slug' => 'announcement',
+                'description' => 'Product updates, company news, and launches.',
+                'active' => true,
+            ],
+        ];
+    }
+
+    private function defaultBlogItems(): array
+    {
+        return [
+            [
+                'category' => 'case-study',
+                'title' => 'How a Retail Team Automated Inventory and Sales Reporting',
+                'image' => '/vite.svg',
+                'date' => '2026-04-10',
+                'details' => 'A short case study about replacing manual stock updates with a centralized reporting workflow.',
+                'active' => true,
+            ],
+            [
+                'category' => 'blog',
+                'title' => 'Choosing the Right Stack for Scalable Business Applications',
+                'image' => '/vite.svg',
+                'date' => '2026-04-12',
+                'details' => 'Practical guidance on balancing performance, maintainability, and delivery speed.',
+                'active' => true,
+            ],
+            [
+                'category' => 'announcement',
+                'title' => 'New Client Portal Templates Are Now Available',
+                'image' => '/vite.svg',
+                'date' => '2026-04-14',
+                'details' => 'A launch note covering the latest reusable UI templates for client portals.',
+                'active' => true,
+            ],
+            [
+                'category' => 'case-study',
+                'title' => 'Improving Operations for a Logistics Business',
+                'image' => '/vite.svg',
+                'date' => '2026-04-18',
+                'details' => 'A delivery story describing scheduling, dispatch, and workflow improvements.',
+                'active' => true,
+            ],
+            [
+                'category' => 'blog',
+                'title' => 'What to Include in a Product Demo Story',
+                'image' => '/vite.svg',
+                'date' => '2026-04-20',
+                'details' => 'A checklist for writing concise, useful demo content that drives action.',
+                'active' => true,
+            ],
+            [
+                'category' => 'announcement',
+                'title' => 'Support Hours Updated for Better Response Coverage',
+                'image' => '/vite.svg',
+                'date' => '2026-04-22',
+                'details' => 'A simple status update about support availability and response times.',
+                'active' => true,
+            ],
+        ];
+    }
+
     public function __invoke()
     {
+        $productCategories = [
+            [
+                'name' => 'ERP',
+                'slug' => 'erp',
+                'description' => 'Enterprise resource planning products for internal operations.',
+                'active' => true,
+            ],
+            [
+                'name' => 'SaaS',
+                'slug' => 'saas',
+                'description' => 'Subscription-ready software products for multiple clients.',
+                'active' => true,
+            ],
+            [
+                'name' => 'Management',
+                'slug' => 'management',
+                'description' => 'Business and operational management solutions.',
+                'active' => true,
+            ],
+            [
+                'name' => 'Other',
+                'slug' => 'other',
+                'description' => 'Custom or uncategorized products.',
+                'active' => true,
+            ],
+        ];
+
+        $products = [
+            [
+                'category' => 'saas',
+                'logo' => '🛒',
+                'title' => 'ShopBD eCommerce Suite',
+                'details' => 'Full-featured multi-vendor eCommerce platform with payment gateway, SEO tools, and a mobile-first storefront.',
+                'features' => ['Multi-vendor', 'Payment gateway', 'SEO tools', 'Mobile-first'],
+                'stack' => ['React', 'Node.js', 'PostgreSQL'],
+                'demo_message' => 'Book a demo for ShopBD eCommerce Suite',
+                'active' => true,
+            ],
+            [
+                'category' => 'erp',
+                'logo' => '📦',
+                'title' => 'Inventory System',
+                'details' => 'Real-time inventory tracking with barcode scanning, purchase orders, and stock alerts.',
+                'features' => ['Barcode scan', 'Stock alerts', 'PO management', 'Analytics'],
+                'stack' => ['React', 'Express', 'MongoDB'],
+                'demo_message' => 'Book a demo for Inventory System',
+                'active' => true,
+            ],
+            [
+                'category' => 'erp',
+                'logo' => '👥',
+                'title' => 'HRM System',
+                'details' => 'Manage recruitment, payroll, attendance, leave, and performance reviews in one platform.',
+                'features' => ['Payroll', 'Leave management', 'Recruitment', 'Reviews'],
+                'stack' => ['React', 'Node.js', 'MySQL'],
+                'demo_message' => 'Book a demo for HRM System',
+                'active' => true,
+            ],
+            [
+                'category' => 'erp',
+                'logo' => '💰',
+                'title' => 'Accounting Software',
+                'details' => 'Invoicing, expense tracking, tax reports, bank reconciliation, and multi-currency support.',
+                'features' => ['Invoicing', 'Tax reports', 'Multi-currency', 'Reconciliation'],
+                'stack' => ['React', 'Python', 'PostgreSQL'],
+                'demo_message' => 'Book a demo for Accounting Software',
+                'active' => true,
+            ],
+            [
+                'category' => 'saas',
+                'logo' => '🍽️',
+                'title' => 'Restaurant SaaS',
+                'details' => 'POS, online ordering, table management, kitchen display, and loyalty programs for restaurants.',
+                'features' => ['POS system', 'Online orders', 'KDS', 'Loyalty'],
+                'stack' => ['React', 'Node.js', 'Redis'],
+                'demo_message' => 'Book a demo for Restaurant SaaS',
+                'active' => true,
+            ],
+            [
+                'category' => 'management',
+                'logo' => '📈',
+                'title' => 'Investment Management',
+                'details' => 'Portfolio tracking, risk assessment, real-time market data, and financial analytics.',
+                'features' => ['Portfolio', 'Risk scoring', 'Market data', 'Reports'],
+                'stack' => ['React', 'Python', 'MySQL'],
+                'demo_message' => 'Book a demo for Investment Management',
+                'active' => true,
+            ],
+            [
+                'category' => 'management',
+                'logo' => '🏠',
+                'title' => 'Tenant Management',
+                'details' => 'Lease management, rent collection, maintenance tracking, and tenant portal.',
+                'features' => ['Lease management', 'Rent collection', 'Maintenance', 'Tenant portal'],
+                'stack' => ['React', 'Node.js', 'PostgreSQL'],
+                'demo_message' => 'Book a demo for Tenant Management',
+                'active' => true,
+            ],
+            [
+                'category' => 'saas',
+                'logo' => '🏪',
+                'title' => 'POS System',
+                'details' => 'Modern point-of-sale for retail with inventory integration and sales analytics.',
+                'features' => ['Sales tracking', 'Staff management', 'Inventory sync', 'Receipts'],
+                'stack' => ['React', 'Express', 'SQLite'],
+                'demo_message' => 'Book a demo for POS System',
+                'active' => true,
+            ],
+        ];
+        $clients = $this->defaultClients();
+        $blogCategories = $this->defaultBlogCategories();
+        $blogItems = $this->defaultBlogItems();
+
         $defaults = [
             'site_title' => 'InfyraSoft Tech',
             'footer_logo' => '/vite.svg',
@@ -96,6 +329,11 @@ class SiteDataController extends Controller
             'core_service_6_key_points' => "Multi-tenant Arch\nSubscription Billing\nCloud-Native\nAuto Scaling\nWhite-label Ready\nAnalytics",
             'products_title' => 'Ready-Made Software Products',
             'products_subtitle' => 'Battle-tested products ready to deploy or customize for your business.',
+            'products_categories' => json_encode($productCategories, JSON_UNESCAPED_UNICODE),
+            'products_items' => json_encode($products, JSON_UNESCAPED_UNICODE),
+            'clients_items' => json_encode($clients, JSON_UNESCAPED_UNICODE),
+            'blog_categories' => json_encode($blogCategories, JSON_UNESCAPED_UNICODE),
+            'blog_items' => json_encode($blogItems, JSON_UNESCAPED_UNICODE),
             'clients_tag' => 'Trusted By',
             'clients_title' => 'Our Clients',
             'blog_title' => 'Case Studies & Blog',

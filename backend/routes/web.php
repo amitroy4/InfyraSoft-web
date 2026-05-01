@@ -42,9 +42,11 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard/clients', [DashboardController::class, 'clients'])->name('dashboard.clients');
     Route::post('/dashboard/clients', [DashboardController::class, 'updateClients'])->name('dashboard.clients.update');
+    Route::post('/dashboard/clients/logo', [DashboardController::class, 'uploadClientLogo'])->name('dashboard.clients.upload-logo');
 
     Route::get('/dashboard/blog', [DashboardController::class, 'blog'])->name('dashboard.blog');
     Route::post('/dashboard/blog', [DashboardController::class, 'updateBlog'])->name('dashboard.blog.update');
+    Route::post('/dashboard/blog/image', [DashboardController::class, 'uploadBlogImage'])->name('dashboard.blog.upload-image');
 
     Route::get('/dashboard/leads', [DashboardController::class, 'leads'])->name('dashboard.leads');
     Route::post('/logout', [AuthController::class, 'logout']);

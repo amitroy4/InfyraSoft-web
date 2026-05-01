@@ -8,6 +8,242 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
+    private function defaultProductCategories(): array
+    {
+        return [
+            [
+                'name' => 'ERP',
+                'slug' => 'erp',
+                'description' => 'Enterprise resource planning products for internal operations.',
+                'active' => true,
+            ],
+            [
+                'name' => 'SaaS',
+                'slug' => 'saas',
+                'description' => 'Subscription-ready software products for multiple clients.',
+                'active' => true,
+            ],
+            [
+                'name' => 'Management',
+                'slug' => 'management',
+                'description' => 'Business and operational management solutions.',
+                'active' => true,
+            ],
+            [
+                'name' => 'Other',
+                'slug' => 'other',
+                'description' => 'Custom or uncategorized products.',
+                'active' => true,
+            ],
+        ];
+    }
+
+    private function defaultProducts(): array
+    {
+        return [
+            [
+                'category' => 'saas',
+                'logo' => '🛒',
+                'title' => 'ShopBD eCommerce Suite',
+                'details' => 'Full-featured multi-vendor eCommerce platform with payment gateway, SEO tools, and a mobile-first storefront.',
+                'features' => ['Multi-vendor', 'Payment gateway', 'SEO tools', 'Mobile-first'],
+                'stack' => ['React', 'Node.js', 'PostgreSQL'],
+                'demo_message' => 'Book a demo for ShopBD eCommerce Suite',
+                'active' => true,
+            ],
+            [
+                'category' => 'erp',
+                'logo' => '📦',
+                'title' => 'Inventory System',
+                'details' => 'Real-time inventory tracking with barcode scanning, purchase orders, and stock alerts.',
+                'features' => ['Barcode scan', 'Stock alerts', 'PO management', 'Analytics'],
+                'stack' => ['React', 'Express', 'MongoDB'],
+                'demo_message' => 'Book a demo for Inventory System',
+                'active' => true,
+            ],
+            [
+                'category' => 'erp',
+                'logo' => '👥',
+                'title' => 'HRM System',
+                'details' => 'Manage recruitment, payroll, attendance, leave, and performance reviews in one platform.',
+                'features' => ['Payroll', 'Leave management', 'Recruitment', 'Reviews'],
+                'stack' => ['React', 'Node.js', 'MySQL'],
+                'demo_message' => 'Book a demo for HRM System',
+                'active' => true,
+            ],
+            [
+                'category' => 'erp',
+                'logo' => '💰',
+                'title' => 'Accounting Software',
+                'details' => 'Invoicing, expense tracking, tax reports, bank reconciliation, and multi-currency support.',
+                'features' => ['Invoicing', 'Tax reports', 'Multi-currency', 'Reconciliation'],
+                'stack' => ['React', 'Python', 'PostgreSQL'],
+                'demo_message' => 'Book a demo for Accounting Software',
+                'active' => true,
+            ],
+            [
+                'category' => 'saas',
+                'logo' => '🍽️',
+                'title' => 'Restaurant SaaS',
+                'details' => 'POS, online ordering, table management, kitchen display, and loyalty programs for restaurants.',
+                'features' => ['POS system', 'Online orders', 'KDS', 'Loyalty'],
+                'stack' => ['React', 'Node.js', 'Redis'],
+                'demo_message' => 'Book a demo for Restaurant SaaS',
+                'active' => true,
+            ],
+            [
+                'category' => 'management',
+                'logo' => '📈',
+                'title' => 'Investment Management',
+                'details' => 'Portfolio tracking, risk assessment, real-time market data, and financial analytics.',
+                'features' => ['Portfolio', 'Risk scoring', 'Market data', 'Reports'],
+                'stack' => ['React', 'Python', 'MySQL'],
+                'demo_message' => 'Book a demo for Investment Management',
+                'active' => true,
+            ],
+            [
+                'category' => 'management',
+                'logo' => '🏠',
+                'title' => 'Tenant Management',
+                'details' => 'Lease management, rent collection, maintenance tracking, and tenant portal.',
+                'features' => ['Lease management', 'Rent collection', 'Maintenance', 'Tenant portal'],
+                'stack' => ['React', 'Node.js', 'PostgreSQL'],
+                'demo_message' => 'Book a demo for Tenant Management',
+                'active' => true,
+            ],
+            [
+                'category' => 'saas',
+                'logo' => '🏪',
+                'title' => 'POS System',
+                'details' => 'Modern point-of-sale for retail with inventory integration and sales analytics.',
+                'features' => ['Sales tracking', 'Staff management', 'Inventory sync', 'Receipts'],
+                'stack' => ['React', 'Express', 'SQLite'],
+                'demo_message' => 'Book a demo for POS System',
+                'active' => true,
+            ],
+        ];
+    }
+
+    private function defaultClients(): array
+    {
+        return [
+            [
+                'logo' => '/vite.svg',
+                'name' => 'Northstar Retail',
+                'url' => 'https://example.com',
+                'active' => true,
+            ],
+            [
+                'logo' => '/vite.svg',
+                'name' => 'Atlas Finance',
+                'url' => 'https://example.com',
+                'active' => true,
+            ],
+            [
+                'logo' => '/vite.svg',
+                'name' => 'Summit Health',
+                'url' => 'https://example.com',
+                'active' => true,
+            ],
+            [
+                'logo' => '/vite.svg',
+                'name' => 'Prime Logistics',
+                'url' => 'https://example.com',
+                'active' => true,
+            ],
+            [
+                'logo' => '/vite.svg',
+                'name' => 'BluePeak Foods',
+                'url' => 'https://example.com',
+                'active' => true,
+            ],
+            [
+                'logo' => '/vite.svg',
+                'name' => 'Vertex Education',
+                'url' => 'https://example.com',
+                'active' => true,
+            ],
+        ];
+    }
+
+    private function defaultBlogCategories(): array
+    {
+        return [
+            [
+                'name' => 'Case Study',
+                'slug' => 'case-study',
+                'description' => 'Project stories, transformations, and client outcomes.',
+                'active' => true,
+            ],
+            [
+                'name' => 'Blog',
+                'slug' => 'blog',
+                'description' => 'Articles, insights, and technical posts.',
+                'active' => true,
+            ],
+            [
+                'name' => 'Announcement',
+                'slug' => 'announcement',
+                'description' => 'Product updates, company news, and launches.',
+                'active' => true,
+            ],
+        ];
+    }
+
+    private function defaultBlogItems(): array
+    {
+        return [
+            [
+                'category' => 'case-study',
+                'title' => 'How a Retail Team Automated Inventory and Sales Reporting',
+                'image' => '/vite.svg',
+                'date' => '2026-04-10',
+                'details' => 'A short case study about replacing manual stock updates with a centralized reporting workflow.',
+                'active' => true,
+            ],
+            [
+                'category' => 'blog',
+                'title' => 'Choosing the Right Stack for Scalable Business Applications',
+                'image' => '/vite.svg',
+                'date' => '2026-04-12',
+                'details' => 'Practical guidance on balancing performance, maintainability, and delivery speed.',
+                'active' => true,
+            ],
+            [
+                'category' => 'announcement',
+                'title' => 'New Client Portal Templates Are Now Available',
+                'image' => '/vite.svg',
+                'date' => '2026-04-14',
+                'details' => 'A launch note covering the latest reusable UI templates for client portals.',
+                'active' => true,
+            ],
+            [
+                'category' => 'case-study',
+                'title' => 'Improving Operations for a Logistics Business',
+                'image' => '/vite.svg',
+                'date' => '2026-04-18',
+                'details' => 'A delivery story describing scheduling, dispatch, and workflow improvements.',
+                'active' => true,
+            ],
+            [
+                'category' => 'blog',
+                'title' => 'What to Include in a Product Demo Story',
+                'image' => '/vite.svg',
+                'date' => '2026-04-20',
+                'details' => 'A checklist for writing concise, useful demo content that drives action.',
+                'active' => true,
+            ],
+            [
+                'category' => 'announcement',
+                'title' => 'Support Hours Updated for Better Response Coverage',
+                'image' => '/vite.svg',
+                'date' => '2026-04-22',
+                'details' => 'A simple status update about support availability and response times.',
+                'active' => true,
+            ],
+        ];
+    }
+
     private function defaults(): array
     {
         $coreServices = [
@@ -54,6 +290,11 @@ class DashboardController extends Controller
                 'active' => true,
             ],
         ];
+        $productCategories = $this->defaultProductCategories();
+        $products = $this->defaultProducts();
+        $clients = $this->defaultClients();
+        $blogCategories = $this->defaultBlogCategories();
+        $blogItems = $this->defaultBlogItems();
 
         return [
             'site_title' => 'InfyraSoft Tech',
@@ -99,8 +340,13 @@ class DashboardController extends Controller
             'core_service_6_key_points' => "Multi-tenant Arch\nSubscription Billing\nCloud-Native\nAuto Scaling\nWhite-label Ready\nAnalytics",
             'products_title' => 'Ready-Made Software Products',
             'products_subtitle' => 'Battle-tested products ready to deploy or customize for your business.',
+            'products_categories' => json_encode($productCategories, JSON_UNESCAPED_UNICODE),
+            'products_items' => json_encode($products, JSON_UNESCAPED_UNICODE),
+            'clients_items' => json_encode($clients, JSON_UNESCAPED_UNICODE),
             'clients_tag' => 'Trusted By',
             'clients_title' => 'Our Clients',
+            'blog_categories' => json_encode($blogCategories, JSON_UNESCAPED_UNICODE),
+            'blog_items' => json_encode($blogItems, JSON_UNESCAPED_UNICODE),
             'blog_title' => 'Case Studies & Blog',
             'blog_subtitle' => 'Insights, success stories, and technical deep-dives from our team.',
             'contact_location' => 'Dhaka, Bangladesh',
@@ -132,6 +378,30 @@ class DashboardController extends Controller
         }
 
         return $merged;
+    }
+
+    private function normalizeStringList($value): array
+    {
+        if (is_array($value)) {
+            $items = $value;
+        } else {
+            $items = preg_split('/\r\n|\n|\r|,/', (string) $value) ?: [];
+        }
+
+        $items = array_map(function ($item) {
+            return trim((string) $item);
+        }, $items);
+
+        return array_values(array_filter($items, function ($item) {
+            return $item !== '';
+        }));
+    }
+
+    private function slugifyText(string $value): string
+    {
+        $slug = strtolower(trim(preg_replace('/[^a-z0-9]+/i', '-', $value) ?? '', '-'));
+
+        return $slug !== '' ? $slug : 'item';
     }
 
     private function persist(array $validated): void
@@ -332,7 +602,109 @@ class DashboardController extends Controller
         $validated = $request->validate([
             'products_title' => ['required', 'string', 'max:220'],
             'products_subtitle' => ['required', 'string', 'max:600'],
+            'products_categories' => ['required', 'json'],
+            'products_items' => ['required', 'json'],
         ]);
+
+        $categories = json_decode($validated['products_categories'], true);
+        $items = json_decode($validated['products_items'], true);
+
+        if (!is_array($categories) || !is_array($items)) {
+            return redirect()->route('dashboard.products')->withErrors(['products_items' => 'Invalid products data format.']);
+        }
+
+        $normalizedCategories = [];
+        $categorySlugs = [];
+
+        foreach ($categories as $category) {
+            if (!is_array($category)) {
+                continue;
+            }
+
+            $name = trim((string) ($category['name'] ?? ''));
+            if ($name === '') {
+                continue;
+            }
+
+            $slugBase = trim((string) ($category['slug'] ?? ''));
+            $slugBase = $slugBase !== '' ? $this->slugifyText($slugBase) : $this->slugifyText($name);
+            $slug = $slugBase;
+            $suffix = 2;
+
+            while (isset($categorySlugs[$slug])) {
+                $slug = $slugBase . '-' . $suffix;
+                $suffix++;
+            }
+
+            $categorySlugs[$slug] = true;
+
+            $normalizedCategories[] = [
+                'name' => substr($name, 0, 80),
+                'slug' => substr($slug, 0, 80),
+                'description' => substr(trim((string) ($category['description'] ?? '')), 0, 200),
+                'active' => !empty($category['active']),
+            ];
+        }
+
+        if (count($normalizedCategories) === 0) {
+            return redirect()->route('dashboard.products')->withErrors(['products_categories' => 'Please add at least one category.']);
+        }
+
+        $fallbackCategory = null;
+        foreach ($normalizedCategories as $category) {
+            if ($category['slug'] === 'other') {
+                $fallbackCategory = $category['slug'];
+                break;
+            }
+        }
+        if ($fallbackCategory === null) {
+            $fallbackCategory = $normalizedCategories[0]['slug'];
+        }
+
+        $normalizedProducts = [];
+        foreach ($items as $item) {
+            if (!is_array($item)) {
+                continue;
+            }
+
+            $logo = trim((string) ($item['logo'] ?? ''));
+            $title = trim((string) ($item['title'] ?? ''));
+            $details = trim((string) ($item['details'] ?? ''));
+            $category = trim((string) ($item['category'] ?? $fallbackCategory));
+            if (!isset($categorySlugs[$category])) {
+                $category = $fallbackCategory;
+            }
+
+            $features = $this->normalizeStringList($item['features'] ?? []);
+            $stack = $this->normalizeStringList($item['stack'] ?? []);
+            $demoMessage = trim((string) ($item['demo_message'] ?? ''));
+
+            if ($demoMessage === '') {
+                $demoMessage = 'Book a demo for ' . $title;
+            }
+
+            if ($logo === '' || $title === '' || $details === '' || count($features) === 0 || count($stack) === 0) {
+                continue;
+            }
+
+            $normalizedProducts[] = [
+                'category' => $category,
+                'logo' => substr($logo, 0, 20),
+                'title' => substr($title, 0, 220),
+                'details' => substr($details, 0, 1200),
+                'features' => array_slice($features, 0, 8),
+                'stack' => array_slice($stack, 0, 8),
+                'demo_message' => substr($demoMessage, 0, 220),
+                'active' => !empty($item['active']),
+            ];
+        }
+
+        if (count($normalizedProducts) === 0) {
+            return redirect()->route('dashboard.products')->withErrors(['products_items' => 'Please add at least one valid product.']);
+        }
+
+        $validated['products_categories'] = json_encode($normalizedCategories, JSON_UNESCAPED_UNICODE);
+        $validated['products_items'] = json_encode($normalizedProducts, JSON_UNESCAPED_UNICODE);
 
         $this->persist($validated);
 
@@ -351,11 +723,58 @@ class DashboardController extends Controller
         $validated = $request->validate([
             'clients_tag' => ['required', 'string', 'max:120'],
             'clients_title' => ['required', 'string', 'max:220'],
+            'clients_items' => ['required', 'json'],
         ]);
+
+        $items = json_decode($validated['clients_items'], true);
+        if (!is_array($items)) {
+            return redirect()->route('dashboard.clients')->withErrors(['clients_items' => 'Invalid client data format.']);
+        }
+
+        $normalizedClients = [];
+        foreach ($items as $item) {
+            if (!is_array($item)) {
+                continue;
+            }
+
+            $logo = trim((string) ($item['logo'] ?? ''));
+            $name = trim((string) ($item['name'] ?? ''));
+            $url = trim((string) ($item['url'] ?? ''));
+
+            if ($name === '') {
+                continue;
+            }
+
+            $normalizedClients[] = [
+                'logo' => substr($logo, 0, 300),
+                'name' => substr($name, 0, 120),
+                'url' => substr($url, 0, 300),
+                'active' => !empty($item['active']),
+            ];
+        }
+
+        if (count($normalizedClients) === 0) {
+            return redirect()->route('dashboard.clients')->withErrors(['clients_items' => 'Please add at least one client.']);
+        }
+
+        $validated['clients_items'] = json_encode($normalizedClients, JSON_UNESCAPED_UNICODE);
 
         $this->persist($validated);
 
         return redirect()->route('dashboard.clients')->with('status', 'Clients section updated successfully.');
+    }
+
+    public function uploadClientLogo(Request $request)
+    {
+        $request->validate([
+            'logo' => ['required', 'file', 'mimes:jpg,jpeg,png,webp,svg', 'max:2048'],
+        ]);
+
+        $path = $request->file('logo')->store('site-assets', 'public');
+
+        return response()->json([
+            'path' => '/storage/' . $path,
+        ]);
     }
 
     public function blog()
@@ -370,11 +789,109 @@ class DashboardController extends Controller
         $validated = $request->validate([
             'blog_title' => ['required', 'string', 'max:220'],
             'blog_subtitle' => ['required', 'string', 'max:600'],
+            'blog_categories' => ['required', 'json'],
+            'blog_items' => ['required', 'json'],
         ]);
+
+        $categories = json_decode($validated['blog_categories'], true);
+        $items = json_decode($validated['blog_items'], true);
+
+        if (!is_array($categories) || !is_array($items)) {
+            return redirect()->route('dashboard.blog')->withErrors(['blog_items' => 'Invalid blog data format.']);
+        }
+
+        $normalizedCategories = [];
+        $categorySlugs = [];
+
+        foreach ($categories as $category) {
+            if (!is_array($category)) {
+                continue;
+            }
+
+            $name = trim((string) ($category['name'] ?? ''));
+            if ($name === '') {
+                continue;
+            }
+
+            $slugBase = trim((string) ($category['slug'] ?? ''));
+            $slugBase = $slugBase !== '' ? $this->slugifyText($slugBase) : $this->slugifyText($name);
+            $slug = $slugBase;
+            $suffix = 2;
+
+            while (isset($categorySlugs[$slug])) {
+                $slug = $slugBase . '-' . $suffix;
+                $suffix++;
+            }
+
+            $categorySlugs[$slug] = true;
+
+            $normalizedCategories[] = [
+                'name' => substr($name, 0, 80),
+                'slug' => substr($slug, 0, 80),
+                'description' => substr(trim((string) ($category['description'] ?? '')), 0, 200),
+                'active' => !empty($category['active']),
+            ];
+        }
+
+        if (count($normalizedCategories) === 0) {
+            return redirect()->route('dashboard.blog')->withErrors(['blog_categories' => 'Please add at least one category.']);
+        }
+
+        $fallbackCategory = $normalizedCategories[0]['slug'];
+
+        $normalizedItems = [];
+        foreach ($items as $item) {
+            if (!is_array($item)) {
+                continue;
+            }
+
+            $title = trim((string) ($item['title'] ?? ''));
+            $image = trim((string) ($item['image'] ?? ''));
+            $date = trim((string) ($item['date'] ?? ''));
+            $details = trim((string) ($item['details'] ?? ''));
+            $category = trim((string) ($item['category'] ?? $fallbackCategory));
+
+            if (!isset($categorySlugs[$category])) {
+                $category = $fallbackCategory;
+            }
+
+            if ($title === '' || $image === '' || $date === '' || $details === '') {
+                continue;
+            }
+
+            $normalizedItems[] = [
+                'category' => $category,
+                'title' => substr($title, 0, 220),
+                'image' => substr($image, 0, 300),
+                'date' => substr($date, 0, 40),
+                'details' => substr($details, 0, 2000),
+                'active' => !empty($item['active']),
+            ];
+        }
+
+        if (count($normalizedItems) === 0) {
+            return redirect()->route('dashboard.blog')->withErrors(['blog_items' => 'Please add at least one blog post or case study.']);
+        }
+
+        $validated['blog_categories'] = json_encode($normalizedCategories, JSON_UNESCAPED_UNICODE);
+        $validated['blog_items'] = json_encode($normalizedItems, JSON_UNESCAPED_UNICODE);
 
         $this->persist($validated);
 
         return redirect()->route('dashboard.blog')->with('status', 'Case Studies & Blog section updated successfully.');
+    }
+
+    public function uploadBlogImage(Request $request)
+    {
+        $request->validate([
+            'image' => ['required', 'file', 'mimes:jpg,jpeg,png,webp,svg', 'max:2048'],
+        ]);
+
+        $path = $request->file('image')->store('site-assets', 'public');
+
+        return response()->json([
+            'path' => '/storage/' . $path,
+        ]);
     }
 
     public function updateContact(Request $request)
@@ -384,6 +901,9 @@ class DashboardController extends Controller
             'contact_email' => ['required', 'email', 'max:190'],
             'contact_phone' => ['required', 'string', 'max:60'],
             'contact_hours' => ['required', 'string', 'max:120'],
+            'whatsapp_link' => ['nullable', 'url', 'max:220'],
+            'facebook_link' => ['nullable', 'url', 'max:220'],
+            'linkedin_link' => ['nullable', 'url', 'max:220'],
         ]);
 
         $this->persist($validated);
