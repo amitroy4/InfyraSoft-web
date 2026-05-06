@@ -2,10 +2,13 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Models\SiteSetting;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('landing');
+    return view('landing', [
+        'siteData' => SiteSetting::toKeyValueMap()->all(),
+    ]);
 });
 
 Route::middleware('guest')->group(function () {

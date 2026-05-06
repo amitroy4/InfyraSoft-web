@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Throwable;
 
 class SiteSetting extends Model
 {
@@ -14,7 +15,11 @@ class SiteSetting extends Model
 
     public static function toKeyValueMap(): Collection
     {
-        return self::query()
-            ->pluck('setting_value', 'setting_key');
+        try {
+            return self::query()
+                ->pluck('setting_value', 'setting_key');
+        } catch (Throwable $throwable) {
+            return collect();
+        }
     }
 }

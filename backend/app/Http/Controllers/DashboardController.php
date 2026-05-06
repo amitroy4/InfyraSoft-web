@@ -300,6 +300,11 @@ class DashboardController extends Controller
             'site_title' => 'InfyraSoft Tech',
             'footer_logo' => '/vite.svg',
             'site_favicon' => '/vite.svg',
+            'hero_badge_text' => "🚀 Bangladesh's Trusted Tech Partner",
+            'hero_type_words' => "Web Applications\nSaaS Platforms\nERP Systems\nAI Solutions\nCustom Software",
+            'hero_menu_items' => "Home\nAbout\nServices\nProducts\nPortfolio\nContact",
+            'hero_primary_button_text' => 'Explore Services',
+            'hero_secondary_button_text' => 'View Our Work',
             'hero_subtitle' => 'InfyraSoft Tech delivers cutting-edge apps, SaaS platforms & enterprise automation for modern businesses in Dhaka and beyond.',
             'about_paragraph_1' => 'Based in Dhaka, Bangladesh, InfyraSoft Tech is a professional software development company specializing in web applications, SaaS platforms, and business automation systems.',
             'about_paragraph_2' => 'We create secure, scalable, and high-performance solutions that help companies streamline operations and accelerate growth globally.',
@@ -468,7 +473,12 @@ class DashboardController extends Controller
     public function updateHome(Request $request)
     {
         $validated = $request->validate([
+            'hero_badge_text' => ['required', 'string', 'max:120'],
             'hero_subtitle' => ['required', 'string'],
+            'hero_type_words' => ['required', 'string', 'max:500'],
+            'hero_menu_items' => ['required', 'string', 'max:500'],
+            'hero_primary_button_text' => ['required', 'string', 'max:120'],
+            'hero_secondary_button_text' => ['required', 'string', 'max:120'],
         ]);
 
         $this->persist($validated);
